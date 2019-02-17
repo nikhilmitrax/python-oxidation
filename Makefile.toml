@@ -1,0 +1,17 @@
+[tasks.build]
+command = "cargo"
+args = ["build", "--release"]
+
+[tasks.move]
+command = "cp"
+args = ["target/release/librust_from_py.dylib","src/rust_from_py.so"]
+
+[tasks.run]
+command = "python"
+args = ["src/test.py"]
+dependencies = ["build", "move"]
+
+[tasks.test]
+command = "cargo"
+args = ["test"]
+dependencies = ["build"]

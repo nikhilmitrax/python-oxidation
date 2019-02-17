@@ -1,0 +1,12 @@
+[package]
+name = "rust_from_py"
+version = "0.1.0"
+edition = "2018"
+
+[lib]
+name = "rust_from_py"
+crate-type = ["cdylib"]
+
+[dependencies.pyo3]
+version = "0.6.0-alpha.2"
+features = ["extension-module"]
