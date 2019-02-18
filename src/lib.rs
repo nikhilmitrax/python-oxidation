@@ -31,18 +31,15 @@ fn test_lambda(
 ) -> PyResult<std::vec::Vec<PyObject>> {
     let mut mapped = std::vec::Vec::new();
     for i in 0..a.len() {
-        let val = f.call(py, PyTuple::new(py, &[a[i]]), None);
-        match &val {
-            Ok(_) => mapped.push(val.unwrap()),
-            Err(_) => return Err(val.unwrap_err()),
-        }
+        let val = f.call(py, PyTuple::new(py, &[a[i]]), None)?;
+        mapped.push(val)
     }
     Ok(mapped)
 }
 
 /// This module is a python module implemented in Rust.
 #[pymodule]
-fn rust_from_py(py: Python, m: &PyModule) -> PyResult<()> {
+fn rust_from_py(_py: Python, m: &PyModule) -> PyResult<()> {
     m.add_wrapped(wrap_pyfunction!(sum_as_string))?;
     m.add_wrapped(wrap_pyfunction!(test_array))?;
     m.add_wrapped(wrap_pyfunction!(test_return_array))?;
