@@ -24,6 +24,18 @@ fn test_return_array(a: std::vec::Vec<i32>) -> PyResult<std::vec::Vec<i32>> {
 }
 
 #[pyfunction]
+fn test_return_dict(a: std::vec::Vec<i32>) -> PyResult<std::collections::HashMap<i64,i64>> {
+
+    let mut x = std::collections::HashMap::new();
+
+    for i in 1..100{
+    x.insert(i, i*i);
+    }
+
+    Ok(x)
+}
+
+#[pyfunction]
 fn test_lambda(
     py: Python,
     a: std::vec::Vec<i32>,
@@ -45,5 +57,6 @@ fn rust_from_py(_py: Python, m: &PyModule) -> PyResult<()> {
     m.add_wrapped(wrap_pyfunction!(test_return_array))?;
     m.add_wrapped(wrap_pyfunction!(test_lambda))?;
 
+    m.add_wrapped(wrap_pyfunction!(test_return_dict))?;
     Ok(())
 }
